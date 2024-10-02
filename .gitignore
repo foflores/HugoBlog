@@ -69,3 +69,7 @@
 # Jetbrains
 **/.idea/
 **/out/
+
+# Aws Cdk
+**/.cdk.staging
+**/cdk.out
