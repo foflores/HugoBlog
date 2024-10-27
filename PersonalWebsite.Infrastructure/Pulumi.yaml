@@ -1,0 +1,6 @@
+name: personal-website-infrastructure
+description: Infrastructure for personal website
+runtime: dotnet
+config:
+  aws:region: us-east-1
+  personal-website-infrastructure:dns-stack-reference: foflores/Dns.Infrastructure/mgm

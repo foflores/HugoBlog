@@ -4,11 +4,11 @@
         <OutputType>Exe</OutputType>
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
-        <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Amazon.CDK.Lib" Version="2.160.0" />
+        <PackageReference Include="Pulumi" Version="3.*" />
+        <PackageReference Include="Pulumi.Aws" Version="6.*" />
     </ItemGroup>
 
 </Project>

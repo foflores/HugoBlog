@@ -1,0 +1,7 @@
+config:
+  personal-website-infrastructure:dns-role-arn-output: dev-account-role-arn
+  personal-website-infrastructure:dns-zone-id-output: favian-flores-net-zone-id
+  personal-website-infrastructure:primary-domain: favianflores.net
+  personal-website-infrastructure:sub-domains: [ www.favianflores.net ]
+  personal-website-infrastructure:viewer-request-function-file: Functions/ViewerRequestDev.js
+  personal-website-infrastructure:viewer-response-function-file: Functions/ViewerResponse.js
