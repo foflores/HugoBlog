@@ -1,7 +1,18 @@
 config:
-  personal-website:dns-role-arn-output: prod-account-role-arn
-  personal-website:dns-zone-id-output: favian-flores-com-zone-id
+  aws:region: us-east-1
+  aws:allowedAccountIds: 633067888675
+  aws:assumeRoles:
+    - roleArn: arn:aws:iam::633067888675:role/org-production-role-iac-d53f9bb
+  personal-website:dns-zoneid: Z03430432LO3DJQ514ASU
   personal-website:primary-domain: favianflores.com
   personal-website:sub-domains: [ www.favianflores.com ]
   personal-website:viewer-request-function-file: Functions/ViewerRequestProd.js
   personal-website:viewer-response-function-file: Functions/ViewerResponse.js
+  personal-website:management-account-id: 888359517863
+  personal-website:dns-account-id: 221082175187
+  personal-website:production-account-id: 633067888675
+  personal-website:development-account-id: 412433735452
+  personal-website:management-iac-role-arn: arn:aws:iam::888359517863:role/org-management-role-iac-81ebd7e
+  personal-website:production-iac-role-arn: arn:aws:iam::633067888675:role/org-production-role-iac-d53f9bb
+  personal-website:development-iac-role-arn: arn:aws:iam::412433735452:role/org-development-role-iac-43dcbd2
+  personal-website:dns-iac-role-arn: arn:aws:iam::221082175187:role/org-dns-role-iac-d6e37b3

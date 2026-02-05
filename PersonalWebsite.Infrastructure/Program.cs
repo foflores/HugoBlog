@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using PersonalWebsite.Infrastructure.Components;
 using Pulumi;
-using Pulumi.Aws;
 using Pulumi.Aws.Acm;
 using Pulumi.Aws.CloudFront;
 using Pulumi.Aws.CloudFront.Inputs;
 using Pulumi.Aws.Iam;
 using Pulumi.Aws.Iam.Inputs;
-using Pulumi.Aws.Inputs;
 using Pulumi.Aws.Route53;
 using Pulumi.Aws.Route53.Inputs;
 using Pulumi.Aws.S3;
@@ -17,29 +16,24 @@ using Pulumi.Aws.S3;
 
 return await Deployment.RunAsync(() =>
 {
-    var config = new Pulumi.Config();
-    var dnsStackReference = new StackReference("dns-stack-reference", new StackReferenceArgs
-    {
-        Name = config.Require("dns-stack-reference")
-    });
-    var dnsRoleArn = dnsStackReference
-        .RequireOutput(config.Require("dns-role-arn-output"))
-        .Apply(x => (string)x);
-    var dnsZoneId = dnsStackReference
-        .RequireOutput(config.Require("dns-zone-id-output"))
-        .Apply(x => (string)x);
+    var config = new Config();
+
     var primaryDomain = config.Require("primary-domain");
     var subDomains = config.RequireObject<List<string>>("sub-domains");
     var viewerRequestFunctionFile = config.Require("viewer-request-function-file");
     var viewerResponseFunctionFile = config.Require("viewer-response-function-file");
+    var dnsZoneId = config.Require("dns-zoneid");
 
-    var dnsProvider = new Provider("dns-provider", new ProviderArgs
+    var providers = new Providers(new ProvidersArgs
     {
-        AssumeRole = new ProviderAssumeRoleArgs
-        {
-            RoleArn = dnsRoleArn,
-            SessionName = "personal-website-dns-records"
-        }
+        //ProductionAccountId = config.Require("production-account-id"),
+        //DevelopmentAccountId = config.Require("development-account-id"),
+        DnsAccountId = config.Require("dns-account-id"),
+        ManagementAccountId = config.Require("management-account-id"),
+        //ProductionIacRoleArn = config.Require("production-iac-role-arn"),
+        //DevelopmentIacRoleArn = config.Require("development-iac-role-arn"),
+        DnsIacRoleArn = config.Require("dns-iac-role-arn"),
+        ManagementIacRoleArn = config.Require("management-iac-role-arn")
     });
 
     var certificate = new Certificate("personal-website-certicate", new CertificateArgs
@@ -70,7 +64,7 @@ return await Deployment.RunAsync(() =>
                 Ttl = 60,
                 Type = dV.ResourceRecordType,
                 ZoneId = dnsZoneId
-            }, new CustomResourceOptions { Provider = dnsProvider }));
+            }, new CustomResourceOptions { Provider = providers.DnsProvider }));
         }
 
         return Output.All(records.Select(y => y.Fqdn));
@@ -228,7 +222,7 @@ return await Deployment.RunAsync(() =>
             }
         ],
         ZoneId = dnsZoneId
-    }, new CustomResourceOptions { Provider = dnsProvider });
+    }, new CustomResourceOptions { Provider = providers.DnsProvider });
 
     var dnsWwwRecord = new Record("dns-www-record", new RecordArgs
     {
@@ -237,5 +231,5 @@ return await Deployment.RunAsync(() =>
         Type = "CNAME",
         Records = [ distribution.DomainName ],
         ZoneId = dnsZoneId
-    }, new CustomResourceOptions { Provider = dnsProvider });
+    }, new CustomResourceOptions { Provider = providers.DnsProvider });
 });

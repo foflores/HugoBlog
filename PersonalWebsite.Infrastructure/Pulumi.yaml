@@ -1,5 +1,3 @@
 name: personal-website
 description: Infrastructure for personal website
 runtime: dotnet
-config:
-  aws:region: us-east-1
