@@ -26,7 +26,7 @@ public class Providers
         DnsProvider = new Provider("dns-provider", new ProviderArgs
         {
             AllowedAccountIds = [args.ManagementAccountId],
-            AssumeRole = new ProviderAssumeRoleArgs
+            AssumeRoles = new ProviderAssumeRoleArgs
             {
                 RoleArn = args.ManagementIacRoleArn,
                 SessionName = "pulumi-personalwebsite-deploy"
