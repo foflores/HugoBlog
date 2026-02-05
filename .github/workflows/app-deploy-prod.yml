@@ -1,0 +1,33 @@
+name: app-deploy-prod
+
+on:
+  workflow_dispatch:
+
+jobs:
+  app-deploy-dev:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v6.0.1
+
+      - name: Configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v5.1.1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_ACCESS_KEY }}
+          role-to-assume: arn:aws:iam::633067888675:role/org-production-role-iac-d53f9bb
+          aws-region: us-east-1
+
+      - name: Install hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.155.2'
+          extended: true
+
+      - name: Build
+        run: hugo --environment production
+        working-directory: ./TechBlog
+
+      - name: Deploy
+        run: hugo deploy --force --maxDeletes -1 --invalidateCDN --environment production
+        working-directory: ./TechBlog
