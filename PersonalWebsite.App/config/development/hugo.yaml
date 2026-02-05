@@ -1,0 +1,16 @@
+baseURL: https://favianflores.net/
+
+enableRobotsTXT: false
+buildDrafts: false
+buildFuture: true
+buildExpired: false
+
+deployment:
+  targets:
+    name: https://favianflores.net/
+    URL: s3://personal-website-bucket20241024154759692000000001
+    cloudFrontDistributionID: E1LBV1PW9I8VFF
+
+params:
+  env: production
+  robotsNoIndex: true

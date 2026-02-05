@@ -1,0 +1,121 @@
+baseURL: "http://10.10.10.138:1313/"
+title: "Favian Flores"
+paginate: 5
+theme: PaperMod
+
+enableRobotsTXT: false
+buildDrafts: true
+buildFuture: true
+buildExpired: false
+
+minify:
+  disableXML: true
+  minifyOutput: true
+
+outputs:
+  home:
+    - HTML
+    - JSON
+
+params:
+  title: "Favian Flores"
+  description: "Hey! I'm Favian and this is my blog where I write about software development. You can find explainers, how-tos, guides, tips & tricks, and anything else I can think of."
+  keywords: [Blog]
+  author: "Favian Flores"
+  images: ["/website-banner.webp"]
+  DateFormat: "January 2, 2006"
+  defaultTheme: dark # dark, light, auto
+  disableThemeToggle: false
+
+  ShowReadingTime: true
+  ShowShareButtons: true
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowCodeCopyButtons: true
+  ShowWordCount: false
+  ShowRssButtonInSectionTermList: false
+  UseHugoToc: true
+  disableSpecial1stPost: true
+  disableScrollToTop: false
+  comments: false
+  hideMeta: true
+  hideSummary: true
+  showToc: true
+  tocOpen: false
+
+  assets:
+    disableHLJS: false # to disable highlight.js
+    disableFingerprinting: false
+    favicon: "/favicon.ico"
+    favicon16x16: "/favicon-16x16.ico"
+    favicon32x32: "/favicon-32x32.ico"
+    apple_touch_icon: "apple-touch-icon.png"
+    safari_pinned_tab: "apple-touch-icon.png"
+
+  label:
+    text: "Favian Flores"
+
+  profileMode:
+    enabled: false
+    title: "Favian Flores"
+    subtitle: "Welcome to my blog!"
+    imageUrl: "/author-favian.webp"
+    imageWidth: 260
+    imageHeight: 250
+    imageTitle: my image
+    buttons:
+      - name: Posts
+        url: posts
+      - name: Tags
+        url: tags
+
+  homeInfoParams:
+    Title: "Hey \U0001F44B"
+    Content: "I'm Favian and this is my blog where I write about software development. You can find explainers, how-tos, guides, tips & tricks, and anything else I can think of."
+
+  socialIcons:
+    - name: twitter
+      url: "http://twitter.com/foflores10/"
+    - name: linkedin
+      url: "https://www.linkedin.com/in/foflores10"
+    - name: github
+      url: "https://github.com/foflores/"
+
+  cover:
+    hidden: true # hide everywhere but not in structured data
+    hiddenInList: true # hide on list pages and home
+    hiddenInSingle: true # hide on single page
+
+  # for search
+  # https://fusejs.io/api/options.html
+  fuseOpts:
+    isCaseSensitive: false
+    shouldSort: true
+    location: 0
+    distance: 1000
+    threshold: 0.4
+    minMatchCharLength: 0
+    keys: ["title", "permalink", "summary", "content"]
+menu:
+  main:
+    - identifier: tags
+      name: Tags
+      url: /tags/
+      weight: 10
+    - identifier: blog
+      name: Archives
+      url: /archives/
+      weight: 20
+    - identifier: search
+      name: Search
+      url: /search/
+      weight: 30
+pygmentsUseClasses: true
+markup:
+  highlight:
+    noClasses: false
+    anchorLineNos: true
+    codeFences: true
+    guessSyntax: true
+    lineNos: false
+    style: monokai

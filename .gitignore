@@ -73,3 +73,5 @@
 # Aws Cdk
 **/.cdk.staging
 **/cdk.out
+
+!**/PersonalWebsite.App/
