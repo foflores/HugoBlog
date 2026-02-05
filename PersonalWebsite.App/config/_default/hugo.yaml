@@ -1,6 +1,6 @@
 baseURL: "http://10.10.10.138:1313/"
 title: "Favian Flores"
-paginate: 5
+pagination.PagerSize: 5
 theme: PaperMod
 
 enableRobotsTXT: false
