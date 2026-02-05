@@ -26,8 +26,8 @@ jobs:
 
       - name: Build
         run: hugo --environment production
-        working-directory: ./TechBlog
+        working-directory: ./PersonalWebsite.App
 
       - name: Deploy
         run: hugo deploy --force --maxDeletes -1 --invalidateCDN --environment production
-        working-directory: ./TechBlog
+        working-directory: ./PersonalWebsite.App
