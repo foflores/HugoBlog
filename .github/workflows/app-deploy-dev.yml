@@ -7,10 +7,8 @@ jobs:
   app-deploy-dev:
       runs-on: ubuntu-latest
       steps:
-      - name: Checkout development branch
+      - name: Checkout main branch
         uses: actions/checkout@v6.0.1
-        with:
-          ref: development
 
       - name: Configure aws credentials
         uses: aws-actions/configure-aws-credentials@v5.1.1
