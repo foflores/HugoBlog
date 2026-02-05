@@ -6,11 +6,5 @@ buildDrafts: false
 buildFuture: false
 buildExpired: false
 
-deployment:
-  targets:
-    name: https://favianflores.com/
-    URL: s3://personal-website-bucket20241024190055276800000001
-    cloudFrontDistributionID: E2HMCICYT59BCK
-
 params:
   env: production
