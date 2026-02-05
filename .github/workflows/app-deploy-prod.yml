@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  app-deploy-dev:
+  app-deploy-prod:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main branch
