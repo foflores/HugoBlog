@@ -1,6 +1,6 @@
 config:
   aws:region: us-east-1
-  aws:allowedAccountIds: 412433735452
+  aws:allowedAccountIds: [412433735452]
   aws:assumeRoles:
     - roleArn: arn:aws:iam::412433735452:role/org-development-role-iac-43dcbd2
   personal-website:dns-zoneid: Z03362712861SYC3Q8412
