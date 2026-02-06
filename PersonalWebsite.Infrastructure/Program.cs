@@ -33,28 +33,28 @@ return await Deployment.RunAsync(() =>
         SubjectAlternativeNames = subDomains,
         HostedZoneId = hostedZoneId
     });
-    //
-    // var sourceBucket = new SourceBucket(prefix, new SourceBucketArgs
-    // {
-    //     EnvProvider = providers.EnvProvider
-    // });
-    //
-    // var contentDeliveryNetwork = new ContentDeliveryNetwork(prefix, new ContentDeliveryNetworkArgs
-    // {
-    //     EnvProvider = providers.EnvProvider,
-    //     ViewerRequestFunctionFile = viewerRequestFunctionFile,
-    //     ViewerResponseFunctionFile = viewerResponseFunctionFile,
-    //     Bucket = sourceBucket.Bucket,
-    //     Certificate = validatedCertificate.Certificate,
-    //     PrimaryDomain = primaryDomain
-    // });
-    //
-    // sourceBucket.ApplyPolicy(contentDeliveryNetwork.Distribution);
-    //
-    // var recordsV2 = new Records(prefix, new RecordsArgs
-    // {
-    //     DnsProvider = providers.DnsProvider,
-    //     Distribution = contentDeliveryNetwork.Distribution,
-    //     HostedZoneId = hostedZoneId
-    // });
+
+    var sourceBucket = new SourceBucket(prefix, new SourceBucketArgs
+    {
+        EnvProvider = providers.EnvProvider
+    });
+
+    var contentDeliveryNetwork = new ContentDeliveryNetwork(prefix, new ContentDeliveryNetworkArgs
+    {
+        EnvProvider = providers.EnvProvider,
+        ViewerRequestFunctionFile = viewerRequestFunctionFile,
+        ViewerResponseFunctionFile = viewerResponseFunctionFile,
+        Bucket = sourceBucket.Bucket,
+        Certificate = validatedCertificate.Certificate,
+        PrimaryDomain = primaryDomain
+    });
+
+    sourceBucket.ApplyPolicy(contentDeliveryNetwork.Distribution);
+
+    var recordsV2 = new Records(prefix, new RecordsArgs
+    {
+        DnsProvider = providers.DnsProvider,
+        Distribution = contentDeliveryNetwork.Distribution,
+        HostedZoneId = hostedZoneId
+    });
 });
