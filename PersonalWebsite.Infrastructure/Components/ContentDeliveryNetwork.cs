@@ -38,14 +38,14 @@ public class ContentDeliveryNetwork
         ViewerRequestFunction = new Function($"{prefix}-function-viewerrequest", new FunctionArgs
         {
             Code = File.ReadAllText(args.ViewerRequestFunctionFile),
-            Name = "personal-website-viewer-request",
+            Name = $"{prefix}-function-viewerrequest",
             Runtime = "cloudfront-js-2.0"
         }, new CustomResourceOptions { Provider = args.EnvProvider });
 
         ViewerResponseFunction = new Function($"{prefix}-function-viewerresponse", new FunctionArgs
         {
             Code = File.ReadAllText(args.ViewerResponseFunctionFile),
-            Name = "personal-website-viewer-response",
+            Name = $"{prefix}-function-viewerresponse",
             Runtime = "cloudfront-js-2.0"
         }, new CustomResourceOptions { Provider = args.EnvProvider });
 
@@ -68,7 +68,7 @@ public class ContentDeliveryNetwork
                 CachePolicyId = "658327ea-f89d-4fab-a63d-7e88639e58f6",
                 CachedMethods = ["GET", "HEAD"],
                 Compress = true,
-                TargetOriginId = "personal-website-bucket-origin",
+                TargetOriginId = $"{prefix}-bucket-origin",
                 ViewerProtocolPolicy = "redirect-to-https",
                 FunctionAssociations =
                 [
@@ -92,7 +92,7 @@ public class ContentDeliveryNetwork
                 {
                     DomainName = args.Bucket.BucketRegionalDomainName,
                     OriginAccessControlId = OriginAccessControl.Id,
-                    OriginId = "personal-website-bucket-origin",
+                    OriginId = $"{prefix}-bucket-origin",
                 }
             },
             PriceClass = "PriceClass_100",
