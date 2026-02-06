@@ -21,7 +21,7 @@ return await Deployment.RunAsync(() =>
     var dnsZoneId = config.Require("hostedzone-id");
 
     var prefix = $"{Deployment.Instance.ProjectName}-{Deployment.Instance.StackName}";
-    var hostedZoneIdV2 = config.Require("hostedzone-id");
+    var hostedZoneIdV2 = config.Require("hostedzone-id-v2");
     var primaryDomain = config.Require("primary-domain");
     var subDomains = config.RequireObject<List<string>>("sub-domains");
     var viewerRequestFunctionFile = config.Require("viewer-request-function-file");
