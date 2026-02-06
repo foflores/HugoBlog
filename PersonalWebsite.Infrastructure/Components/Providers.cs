@@ -29,7 +29,8 @@ public class Providers
             {
                 RoleArn = args.ManagementIacRoleArn,
                 SessionName = "pulumi-personalwebsite-deploy"
-            }
+            },
+            Region = "us-east-1"
         });
 
         DnsProvider = new Provider($"{prefix}-provider-dns", new ProviderArgs
@@ -39,7 +40,8 @@ public class Providers
             {
                 RoleArn = args.DnsIacRoleArn,
                 SessionName = $"pulumi-{prefix}-deploy"
-            }
+            },
+            Region = "us-east-1"
         });
 
         EnvProvider = new Provider($"{prefix}-provider-env", new ProviderArgs
@@ -49,7 +51,8 @@ public class Providers
             {
                 RoleArn = args.EnvIacRoleArn,
                 SessionName = $"pulumi-{prefix}-deploy"
-            }
+            },
+            Region = "us-east-1"
         });
     }
 }

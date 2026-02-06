@@ -5,12 +5,11 @@ config:
     - roleArn: arn:aws:iam::412433735452:role/org-development-role-iac-43dcbd2
   personalwebsite:management-account-id: 888359517863
   personalwebsite:management-iac-role-arn: arn:aws:iam::888359517863:role/org-management-role-iac-81ebd7e
-  personalwebsite:hostedzone-id: Z03362712861SYC3Q8412
   personalwebsite:dns-account-id: 221082175187
   personalwebsite:dns-iac-role-arn: arn:aws:iam::221082175187:role/org-dns-role-iac-d6e37b3
   personalwebsite:env-account-id: 412433735452
   personalwebsite:env-iac-role-arn: arn:aws:iam::412433735452:role/org-development-role-iac-43dcbd2
-  personalwebsite:hostedzone-id-v2: Z01245352CJ13PJJUPQK0
+  personalwebsite:hostedzone-id: Z01245352CJ13PJJUPQK0
   personalwebsite:primary-domain: favianflores.net
   personalwebsite:sub-domains: [ www.favianflores.net ]
   personalwebsite:viewer-request-function-file: Functions/ViewerRequestDev.js
