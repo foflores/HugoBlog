@@ -21,7 +21,7 @@ jobs:
         uses: pulumi/actions@v6.6.1
         with:
           command: preview
-          stack-name: foflores/personal-website/dev
+          stack-name: foflores/personalwebsite/dev
           work-dir: ./PersonalWebsite.Infrastructure
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
