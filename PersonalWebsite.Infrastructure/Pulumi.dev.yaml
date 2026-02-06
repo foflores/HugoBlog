@@ -3,16 +3,15 @@ config:
   aws:allowedAccountIds: [412433735452]
   aws:assumeRoles:
     - roleArn: arn:aws:iam::412433735452:role/org-development-role-iac-43dcbd2
-  personal-website:dns-zoneid: Z03362712861SYC3Q8412
-  personal-website:primary-domain: favianflores.net
-  personal-website:sub-domains: [ www.favianflores.net ]
-  personal-website:viewer-request-function-file: Functions/ViewerRequestDev.js
-  personal-website:viewer-response-function-file: Functions/ViewerResponse.js
-  personal-website:management-account-id: 888359517863
-  personal-website:dns-account-id: 221082175187
-  personal-website:production-account-id: 633067888675
-  personal-website:development-account-id: 412433735452
-  personal-website:management-iac-role-arn: arn:aws:iam::888359517863:role/org-management-role-iac-81ebd7e
-  personal-website:production-iac-role-arn: arn:aws:iam::633067888675:role/org-production-role-iac-d53f9bb
-  personal-website:development-iac-role-arn: arn:aws:iam::412433735452:role/org-development-role-iac-43dcbd2
-  personal-website:dns-iac-role-arn: arn:aws:iam::221082175187:role/org-dns-role-iac-d6e37b3
+  personalwebsite:management-account-id: 888359517863
+  personalwebsite:management-iac-role-arn: arn:aws:iam::888359517863:role/org-management-role-iac-81ebd7e
+  personalwebsite:hostedzone-id: Z03362712861SYC3Q8412
+  personalwebsite:dns-account-id: 221082175187
+  personalwebsite:dns-iac-role-arn: arn:aws:iam::221082175187:role/org-dns-role-iac-d6e37b3
+  personalwebsite:env-account-id: 412433735452
+  personalwebsite:env-iac-role-arn: arn:aws:iam::412433735452:role/org-development-role-iac-43dcbd2
+  personalwebsite:hostedzone-id-v2: Z01245352CJ13PJJUPQK0
+  personalwebsite:primary-domain: favianflores.net
+  personalwebsite:sub-domains: [ www.favianflores.net ]
+  personalwebsite:viewer-request-function-file: Functions/ViewerRequestDev.js
+  personalwebsite:viewer-response-function-file: Functions/ViewerResponse.js

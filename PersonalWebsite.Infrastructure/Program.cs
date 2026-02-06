@@ -18,22 +18,56 @@ return await Deployment.RunAsync(() =>
 {
     var config = new Config();
 
+    var dnsZoneId = config.Require("hostedzone-id");
+
+    var prefix = $"{Deployment.Instance.ProjectName}-{Deployment.Instance.StackName}";
+    var hostedZoneIdV2 = config.Require("hostedzone-id");
     var primaryDomain = config.Require("primary-domain");
     var subDomains = config.RequireObject<List<string>>("sub-domains");
     var viewerRequestFunctionFile = config.Require("viewer-request-function-file");
     var viewerResponseFunctionFile = config.Require("viewer-response-function-file");
-    var dnsZoneId = config.Require("dns-zoneid");
 
-    var providers = new Providers(new ProvidersArgs
+    var providers = new Providers(prefix, new ProvidersArgs
     {
-        //ProductionAccountId = config.Require("production-account-id"),
-        //DevelopmentAccountId = config.Require("development-account-id"),
+        EnvAccountId = config.Require("env-account-id"),
         DnsAccountId = config.Require("dns-account-id"),
         ManagementAccountId = config.Require("management-account-id"),
-        //ProductionIacRoleArn = config.Require("production-iac-role-arn"),
-        //DevelopmentIacRoleArn = config.Require("development-iac-role-arn"),
+        EnvIacRoleArn = config.Require("env-iac-role-arn"),
         DnsIacRoleArn = config.Require("dns-iac-role-arn"),
         ManagementIacRoleArn = config.Require("management-iac-role-arn")
+    });
+
+    var validatedCertificate = new ValidatedCertificate(prefix, new ValidatedCertificateArgs
+    {
+        DnsProvider = providers.DnsProvider,
+        EnvProvider = providers.EnvProvider,
+        PrimaryDomain = primaryDomain,
+        SubjectAlternativeNames = subDomains,
+        HostedZoneId = hostedZoneIdV2
+    });
+
+    var sourceBucket = new SourceBucket(prefix, new SourceBucketArgs
+    {
+        EnvProvider = providers.EnvProvider
+    });
+
+    var contentDeliveryNetwork = new ContentDeliveryNetwork(prefix, new ContentDeliveryNetworkArgs
+    {
+        EnvProvider = providers.EnvProvider,
+        ViewerRequestFunctionFile = viewerRequestFunctionFile,
+        ViewerResponseFunctionFile = viewerResponseFunctionFile,
+        Bucket = sourceBucket.Bucket,
+        Certificate = validatedCertificate.Certificate,
+        PrimaryDomain = primaryDomain
+    });
+
+    sourceBucket.ApplyPolicy(contentDeliveryNetwork.Distribution);
+
+    var recordsV2 = new Records(prefix, new RecordsArgs
+    {
+        DnsProvider = providers.DnsProvider,
+        Distribution = contentDeliveryNetwork.Distribution,
+        HostedZoneId = hostedZoneIdV2
     });
 
     var certificate = new Certificate("personal-website-certicate", new CertificateArgs
@@ -64,7 +98,7 @@ return await Deployment.RunAsync(() =>
                 Ttl = 60,
                 Type = dV.ResourceRecordType,
                 ZoneId = dnsZoneId
-            }, new CustomResourceOptions { Provider = providers.DnsProvider }));
+            }, new CustomResourceOptions { Provider = providers.ManagementProvider }));
         }
 
         return Output.All(records.Select(y => y.Fqdn));
@@ -171,41 +205,39 @@ return await Deployment.RunAsync(() =>
         WaitForDeployment = false,
     });
 
-    var bucketPolicyStatement = GetPolicyDocument.Invoke(new GetPolicyDocumentInvokeArgs
-    {
-        Version = "2012-10-17",
-        Statements =
-        [
-            new GetPolicyDocumentStatementInputArgs
-            {
-                Effect = "Allow",
-                Principals =
-                [
-                    new GetPolicyDocumentStatementPrincipalInputArgs
-                    {
-                        Identifiers = ["cloudfront.amazonaws.com"],
-                        Type = "Service"
-                    }
-                ],
-                Actions = ["s3:GetObject"],
-                Resources = [ bucket.Arn.Apply(x => $"{x}/*") ],
-                Conditions =
-                [
-                    new GetPolicyDocumentStatementConditionInputArgs
-                    {
-                        Test = "StringEquals",
-                        Values = distribution.Arn,
-                        Variable = "AWS:SourceArn"
-                    }
-                ],
-            }
-        ]
-    });
-
     var bucketPolicy = new BucketPolicy("personal-website-bucket-policy", new BucketPolicyArgs
     {
         Bucket = bucket.BucketName,
-        Policy = bucketPolicyStatement.Apply(x => x.Json)
+        Policy = GetPolicyDocument.Invoke(new GetPolicyDocumentInvokeArgs
+        {
+            Version = "2012-10-17",
+            Statements =
+            [
+                new GetPolicyDocumentStatementInputArgs
+                {
+                    Effect = "Allow",
+                    Principals =
+                    [
+                        new GetPolicyDocumentStatementPrincipalInputArgs
+                        {
+                            Identifiers = ["cloudfront.amazonaws.com"],
+                            Type = "Service"
+                        }
+                    ],
+                    Actions = ["s3:GetObject"],
+                    Resources = [ bucket.Arn.Apply(x => $"{x}/*") ],
+                    Conditions =
+                    [
+                        new GetPolicyDocumentStatementConditionInputArgs
+                        {
+                            Test = "StringEquals",
+                            Values = distribution.Arn,
+                            Variable = "AWS:SourceArn"
+                        }
+                    ],
+                }
+            ]
+        }).Apply(x => x.Json)
     });
 
     var dnsRootRecord = new Record("dns-root-record", new RecordArgs
@@ -222,7 +254,7 @@ return await Deployment.RunAsync(() =>
             }
         ],
         ZoneId = dnsZoneId
-    }, new CustomResourceOptions { Provider = providers.DnsProvider });
+    }, new CustomResourceOptions { Provider = providers.ManagementProvider });
 
     var dnsWwwRecord = new Record("dns-www-record", new RecordArgs
     {
@@ -231,5 +263,5 @@ return await Deployment.RunAsync(() =>
         Type = "CNAME",
         Records = [ distribution.DomainName ],
         ZoneId = dnsZoneId
-    }, new CustomResourceOptions { Provider = providers.DnsProvider });
+    }, new CustomResourceOptions { Provider = providers.ManagementProvider });
 });
