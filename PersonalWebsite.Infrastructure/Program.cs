@@ -37,38 +37,38 @@ return await Deployment.RunAsync(() =>
         ManagementIacRoleArn = config.Require("management-iac-role-arn")
     });
 
-    var validatedCertificate = new ValidatedCertificate(prefix, new ValidatedCertificateArgs
-    {
-        DnsProvider = providers.DnsProvider,
-        EnvProvider = providers.EnvProvider,
-        PrimaryDomain = primaryDomain,
-        SubjectAlternativeNames = subDomains,
-        HostedZoneId = hostedZoneIdV2
-    });
-
-    var sourceBucket = new SourceBucket(prefix, new SourceBucketArgs
-    {
-        EnvProvider = providers.EnvProvider
-    });
-
-    var contentDeliveryNetwork = new ContentDeliveryNetwork(prefix, new ContentDeliveryNetworkArgs
-    {
-        EnvProvider = providers.EnvProvider,
-        ViewerRequestFunctionFile = viewerRequestFunctionFile,
-        ViewerResponseFunctionFile = viewerResponseFunctionFile,
-        Bucket = sourceBucket.Bucket,
-        Certificate = validatedCertificate.Certificate,
-        PrimaryDomain = primaryDomain
-    });
-
-    sourceBucket.ApplyPolicy(contentDeliveryNetwork.Distribution);
-
-    var recordsV2 = new Records(prefix, new RecordsArgs
-    {
-        DnsProvider = providers.DnsProvider,
-        Distribution = contentDeliveryNetwork.Distribution,
-        HostedZoneId = hostedZoneIdV2
-    });
+    // var validatedCertificate = new ValidatedCertificate(prefix, new ValidatedCertificateArgs
+    // {
+    //     DnsProvider = providers.DnsProvider,
+    //     EnvProvider = providers.EnvProvider,
+    //     PrimaryDomain = primaryDomain,
+    //     SubjectAlternativeNames = subDomains,
+    //     HostedZoneId = hostedZoneIdV2
+    // });
+    //
+    // var sourceBucket = new SourceBucket(prefix, new SourceBucketArgs
+    // {
+    //     EnvProvider = providers.EnvProvider
+    // });
+    //
+    // var contentDeliveryNetwork = new ContentDeliveryNetwork(prefix, new ContentDeliveryNetworkArgs
+    // {
+    //     EnvProvider = providers.EnvProvider,
+    //     ViewerRequestFunctionFile = viewerRequestFunctionFile,
+    //     ViewerResponseFunctionFile = viewerResponseFunctionFile,
+    //     Bucket = sourceBucket.Bucket,
+    //     Certificate = validatedCertificate.Certificate,
+    //     PrimaryDomain = primaryDomain
+    // });
+    //
+    // sourceBucket.ApplyPolicy(contentDeliveryNetwork.Distribution);
+    //
+    // var recordsV2 = new Records(prefix, new RecordsArgs
+    // {
+    //     DnsProvider = providers.DnsProvider,
+    //     Distribution = contentDeliveryNetwork.Distribution,
+    //     HostedZoneId = hostedZoneIdV2
+    // });
 
     var certificate = new Certificate("personal-website-certicate", new CertificateArgs
     {
