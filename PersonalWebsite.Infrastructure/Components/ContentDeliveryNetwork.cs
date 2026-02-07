@@ -12,6 +12,7 @@ public class ContentDeliveryNetworkArgs
 {
     public required Bucket Bucket { get; init; }
     public required Certificate Certificate { get; init; }
+    public required CertificateValidation CertificateValidation { get; init; }
     public required Provider EnvProvider { get; init; }
     public required string PrimaryDomain { get; init; }
     public required string ViewerRequestFunctionFile { get; init; }
@@ -112,6 +113,6 @@ public class ContentDeliveryNetwork
                 MinimumProtocolVersion = "TLSv1.2_2021"
             },
             WaitForDeployment = false,
-        }, new CustomResourceOptions { Provider = args.EnvProvider });
+        }, new CustomResourceOptions { Provider = args.EnvProvider, DependsOn = [ args.CertificateValidation ]});
     }
 }

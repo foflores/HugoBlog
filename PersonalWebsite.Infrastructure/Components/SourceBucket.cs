@@ -64,7 +64,7 @@ public class SourceBucket
                         ],
                     }
                 ]
-            }).Apply(x => x.Json)
+            }, new InvokeOptions{ Provider = _args.EnvProvider}).Apply(x => x.Json)
         }, new CustomResourceOptions { Provider = _args.EnvProvider });
     }
 }

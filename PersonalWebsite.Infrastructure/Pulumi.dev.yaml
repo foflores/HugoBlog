@@ -1,10 +1,5 @@
 config:
-  aws:region: us-east-1
-  aws:allowedAccountIds: [412433735452]
-  aws:assumeRoles:
-    - roleArn: arn:aws:iam::412433735452:role/org-development-role-iac-43dcbd2
-  personalwebsite:management-account-id: 888359517863
-  personalwebsite:management-iac-role-arn: arn:aws:iam::888359517863:role/org-management-role-iac-81ebd7e
+  pulumi:disable-default-providers: ["*"]
   personalwebsite:dns-account-id: 221082175187
   personalwebsite:dns-iac-role-arn: arn:aws:iam::221082175187:role/org-dns-role-iac-d6e37b3
   personalwebsite:env-account-id: 412433735452

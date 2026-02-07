@@ -19,10 +19,8 @@ return await Deployment.RunAsync(() =>
     {
         EnvAccountId = config.Require("env-account-id"),
         DnsAccountId = config.Require("dns-account-id"),
-        ManagementAccountId = config.Require("management-account-id"),
         EnvIacRoleArn = config.Require("env-iac-role-arn"),
         DnsIacRoleArn = config.Require("dns-iac-role-arn"),
-        ManagementIacRoleArn = config.Require("management-iac-role-arn")
     });
 
     var validatedCertificate = new ValidatedCertificate(prefix, new ValidatedCertificateArgs
@@ -46,6 +44,7 @@ return await Deployment.RunAsync(() =>
         ViewerResponseFunctionFile = viewerResponseFunctionFile,
         Bucket = sourceBucket.Bucket,
         Certificate = validatedCertificate.Certificate,
+        CertificateValidation = validatedCertificate.Validation,
         PrimaryDomain = primaryDomain
     });
 

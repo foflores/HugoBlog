@@ -29,9 +29,9 @@ jobs:
         working-directory: ./PersonalWebsite.App
 
       - name: Deploy
-        run: aws s3 sync --delete ./public s3://personal-website-bucket20241024154759692000000001
+        run: aws s3 sync --delete ./public s3://personalwebsite-dev-bucket-source
         working-directory: ./PersonalWebsite.App
 
       - name: Invalidate cdn
-        run: aws cloudfront create-invalidation --distribution-id E1LBV1PW9I8VFF --paths "/*"
+        run: aws cloudfront create-invalidation --distribution-id EQ05R6I6CGXJM --paths "/*"
         working-directory: ./PersonalWebsite.App
