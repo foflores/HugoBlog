@@ -6,6 +6,8 @@ using Pulumi.Aws.Route53.Inputs;
 
 namespace PersonalWebsite.Infrastructure.Components;
 
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+
 public class RecordsArgs
 {
     public required Provider DnsProvider { get; init; }

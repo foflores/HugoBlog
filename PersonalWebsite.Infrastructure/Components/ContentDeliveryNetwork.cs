@@ -6,6 +6,8 @@ using Pulumi.Aws.CloudFront;
 using Pulumi.Aws.CloudFront.Inputs;
 using Pulumi.Aws.S3;
 
+// ReSharper disable MemberCanBePrivate.Global
+
 namespace PersonalWebsite.Infrastructure.Components;
 
 public class ContentDeliveryNetworkArgs

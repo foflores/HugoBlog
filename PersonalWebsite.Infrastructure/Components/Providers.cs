@@ -1,4 +1,3 @@
-using Pulumi;
 using Pulumi.Aws;
 using Pulumi.Aws.Inputs;
 

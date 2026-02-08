@@ -5,6 +5,8 @@ using Pulumi.Aws.Iam;
 using Pulumi.Aws.Iam.Inputs;
 using Pulumi.Aws.S3;
 
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+
 namespace PersonalWebsite.Infrastructure.Components;
 
 public class SourceBucketArgs
