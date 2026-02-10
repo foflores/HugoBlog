@@ -9,9 +9,9 @@ return await Deployment.RunAsync(() =>
     var config = new Config();
 
     var prefix = $"{Deployment.Instance.ProjectName}-{Deployment.Instance.StackName}";
-    var hostedZoneId = config.Require("hostedzone-id");
-    var primaryDomain = config.Require("primary-domain");
-    var subDomains = config.RequireObject<List<string>>("sub-domains");
+    var zoneId = config.Require("zone-id");
+    var domain = config.Require("domain");
+    var subjectAlternativeNames = config.RequireObject<List<string>>("subject-alternative-names");
     var viewerRequestFunctionFile = config.Require("viewer-request-function-file");
     var viewerResponseFunctionFile = config.Require("viewer-response-function-file");
 
@@ -20,40 +20,40 @@ return await Deployment.RunAsync(() =>
         EnvAccountId = config.Require("env-account-id"),
         DnsAccountId = config.Require("dns-account-id"),
         EnvIacRoleArn = config.Require("env-iac-role-arn"),
-        DnsIacRoleArn = config.Require("dns-iac-role-arn"),
+        DnsIacRoleArn = config.Require("dns-iac-role-arn")
     });
 
-    var validatedCertificate = new ValidatedCertificate(prefix, new ValidatedCertificateArgs
+    var certificates = new Certificates(prefix, new CertificatesArgs
     {
         DnsProvider = providers.DnsProvider,
         EnvProvider = providers.EnvProvider,
-        PrimaryDomain = primaryDomain,
-        SubjectAlternativeNames = subDomains,
-        HostedZoneId = hostedZoneId
+        Domain = domain,
+        SubjectAlternativeNames = subjectAlternativeNames,
+        ZoneId = zoneId
     });
 
-    var sourceBucket = new SourceBucket(prefix, new SourceBucketArgs
+    var buckets = new Buckets(prefix, new BucketsArgs
     {
         EnvProvider = providers.EnvProvider
     });
 
-    var contentDeliveryNetwork = new ContentDeliveryNetwork(prefix, new ContentDeliveryNetworkArgs
+    var distributions = new Distributions(prefix, new DistributionsArgs
     {
         EnvProvider = providers.EnvProvider,
         ViewerRequestFunctionFile = viewerRequestFunctionFile,
         ViewerResponseFunctionFile = viewerResponseFunctionFile,
-        Bucket = sourceBucket.Bucket,
-        Certificate = validatedCertificate.Certificate,
-        CertificateValidation = validatedCertificate.Validation,
-        PrimaryDomain = primaryDomain
+        SourceBucket = buckets.SourceBucket,
+        Certificate = certificates.Certificate,
+        CertificateValidation = certificates.CertificateValidation,
+        Domain = domain
     });
 
-    sourceBucket.ApplyPolicy(contentDeliveryNetwork.Distribution);
+    buckets.ApplySourceBucketPolicy(distributions.Distribution);
 
-    var recordsV2 = new Records(prefix, new RecordsArgs
+    var records = new Records(prefix, new RecordsArgs
     {
         DnsProvider = providers.DnsProvider,
-        Distribution = contentDeliveryNetwork.Distribution,
-        HostedZoneId = hostedZoneId
+        MainDistribution = distributions.Distribution,
+        MainHostedZoneId = zoneId
     });
 });

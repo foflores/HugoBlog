@@ -7,25 +7,26 @@ using Pulumi.Aws.Route53;
 
 namespace PersonalWebsite.Infrastructure.Components;
 
-public class ValidatedCertificateArgs
+public class CertificatesArgs
 {
     public required Provider DnsProvider { get; init; }
     public required Provider EnvProvider { get; init; }
-    public required Input<string> PrimaryDomain { get; init; }
+    public required Input<string> Domain { get; init; }
     public required InputList<string> SubjectAlternativeNames { get; init; }
-    public required Input<string> HostedZoneId { get; init; }
+    public required Input<string> ZoneId { get; init; }
 }
 
-public class ValidatedCertificate
+public class Certificates
 {
     public Certificate Certificate { get; }
-    public CertificateValidation Validation { get; }
+    public CertificateValidation CertificateValidation { get; }
 
-    public ValidatedCertificate(string prefix, ValidatedCertificateArgs args)
+    public Certificates(string prefix, CertificatesArgs args)
     {
+        var count = 1;
         Certificate = new Certificate($"{prefix}-certicate", new CertificateArgs
         {
-            DomainName = args.PrimaryDomain,
+            DomainName = args.Domain,
             SubjectAlternativeNames = args.SubjectAlternativeNames,
             ValidationMethod = "DNS"
         }, new CustomResourceOptions { Provider = args.EnvProvider});
@@ -43,21 +44,22 @@ public class ValidatedCertificate
                     continue;
                 }
 
-                records.Add(new Record($"{prefix}-record-{option.DomainName}dnsvalidation", new RecordArgs
+                records.Add(new Record($"{prefix}-record-dnsval-{count:00}", new RecordArgs
                 {
                     AllowOverwrite = true,
                     Name = option.ResourceRecordName,
                     Records = [ option.ResourceRecordValue ],
                     Ttl = 60,
                     Type = option.ResourceRecordType,
-                    ZoneId = args.HostedZoneId
+                    ZoneId = args.ZoneId
                 }, new CustomResourceOptions { Provider = args.DnsProvider }));
+                count++;
             }
 
             return Output.All(records.Select(y => y.Fqdn));
         });
 
-        Validation = new CertificateValidation($"{prefix}-certificatevalidation", new CertificateValidationArgs
+        CertificateValidation = new CertificateValidation($"{prefix}-certval", new CertificateValidationArgs
         {
             CertificateArn = Certificate.Arn,
             ValidationRecordFqdns = records

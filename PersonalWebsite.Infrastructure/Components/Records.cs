@@ -11,8 +11,8 @@ namespace PersonalWebsite.Infrastructure.Components;
 public class RecordsArgs
 {
     public required Provider DnsProvider { get; init; }
-    public required Distribution Distribution { get; init; }
-    public required string HostedZoneId { get; init; }
+    public required Distribution MainDistribution { get; init; }
+    public required string MainHostedZoneId { get; init; }
 }
 
 public class Records
@@ -30,12 +30,12 @@ public class Records
             [
                 new RecordAliasArgs
                 {
-                    Name = args.Distribution.DomainName,
-                    ZoneId = args.Distribution.HostedZoneId,
+                    Name = args.MainDistribution.DomainName,
+                    ZoneId = args.MainDistribution.HostedZoneId,
                     EvaluateTargetHealth = false
                 }
             ],
-            ZoneId = args.HostedZoneId
+            ZoneId = args.MainHostedZoneId
         }, new CustomResourceOptions { Provider = args.DnsProvider });
 
         WwwRecord = new Record($"{prefix}-record-www", new RecordArgs
@@ -43,8 +43,8 @@ public class Records
             Name = "www",
             Ttl = 300,
             Type = "CNAME",
-            Records = [ args.Distribution.DomainName ],
-            ZoneId = args.HostedZoneId
+            Records = [ args.MainDistribution.DomainName ],
+            ZoneId = args.MainHostedZoneId
         }, new CustomResourceOptions { Provider = args.DnsProvider });
     }
 }

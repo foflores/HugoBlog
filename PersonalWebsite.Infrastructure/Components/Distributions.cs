@@ -10,25 +10,25 @@ using Pulumi.Aws.S3;
 
 namespace PersonalWebsite.Infrastructure.Components;
 
-public class ContentDeliveryNetworkArgs
+public class DistributionsArgs
 {
-    public required Bucket Bucket { get; init; }
+    public required Bucket SourceBucket { get; init; }
     public required Certificate Certificate { get; init; }
     public required CertificateValidation CertificateValidation { get; init; }
     public required Provider EnvProvider { get; init; }
-    public required string PrimaryDomain { get; init; }
+    public required string Domain { get; init; }
     public required string ViewerRequestFunctionFile { get; init; }
     public required string ViewerResponseFunctionFile { get; init; }
 }
 
-public class ContentDeliveryNetwork
+public class Distributions
 {
     public Distribution Distribution { get; }
     public OriginAccessControl OriginAccessControl { get; }
     public Function ViewerRequestFunction { get; }
     public Function ViewerResponseFunction { get; }
 
-    public ContentDeliveryNetwork(string prefix, ContentDeliveryNetworkArgs args)
+    public Distributions(string prefix, DistributionsArgs args)
     {
         OriginAccessControl = new OriginAccessControl($"{prefix}-originaccesscontrol", new OriginAccessControlArgs
         {
@@ -54,7 +54,7 @@ public class ContentDeliveryNetwork
 
         Distribution = new Distribution($"{prefix}-distribution", new DistributionArgs
         {
-            Aliases = [ args.PrimaryDomain ],
+            Aliases = [ args.Domain ],
             CustomErrorResponses =
             [
                 new DistributionCustomErrorResponseArgs
@@ -93,7 +93,7 @@ public class ContentDeliveryNetwork
             {
                 new DistributionOriginArgs
                 {
-                    DomainName = args.Bucket.BucketRegionalDomainName,
+                    DomainName = args.SourceBucket.BucketRegionalDomainName,
                     OriginAccessControlId = OriginAccessControl.Id,
                     OriginId = $"{prefix}-bucket-origin",
                 }

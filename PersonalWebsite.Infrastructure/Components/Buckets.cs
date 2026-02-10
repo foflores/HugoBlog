@@ -9,34 +9,35 @@ using Pulumi.Aws.S3;
 
 namespace PersonalWebsite.Infrastructure.Components;
 
-public class SourceBucketArgs
+public class BucketsArgs
 {
     public required Provider EnvProvider { get; init; }
 }
 
-public class SourceBucket
+public class Buckets
 {
     private readonly string _prefix;
-    private readonly SourceBucketArgs _args;
+    private readonly BucketsArgs _args;
 
-    public Bucket Bucket { get; }
-    public BucketPolicy? BucketPolicy { get; private set; }
-    public SourceBucket(string prefix, SourceBucketArgs args)
+    public Bucket SourceBucket { get; }
+    public BucketPolicy? SourceBucketPolicy { get; private set; }
+    public Buckets(string prefix, BucketsArgs args)
     {
         _prefix = prefix;
         _args = args;
-        Bucket = new Bucket($"{prefix}-bucket-source", new BucketArgs
+
+        SourceBucket = new Bucket($"{prefix}-bucket-source", new BucketArgs
         {
             BucketName = $"{prefix}-bucket-source",
             ForceDestroy = true
         }, new CustomResourceOptions { Provider = args.EnvProvider });
     }
 
-    public void ApplyPolicy(Distribution distribution)
+    public void ApplySourceBucketPolicy(Distribution mainDistribution)
     {
-        BucketPolicy = new BucketPolicy($"{_prefix}-bucketpolicy-source", new BucketPolicyArgs
+        SourceBucketPolicy = new BucketPolicy($"{_prefix}-bucketpolicy-source", new BucketPolicyArgs
         {
-            Bucket = Bucket.BucketName,
+            Bucket = SourceBucket.BucketName,
             Policy = GetPolicyDocument.Invoke(new GetPolicyDocumentInvokeArgs
             {
                 Version = "2012-10-17",
@@ -54,13 +55,13 @@ public class SourceBucket
                             }
                         ],
                         Actions = ["s3:GetObject"],
-                        Resources = [ Bucket.Arn.Apply(x => $"{x}/*") ],
+                        Resources = [ SourceBucket.Arn.Apply(x => $"{x}/*") ],
                         Conditions =
                         [
                             new GetPolicyDocumentStatementConditionInputArgs
                             {
                                 Test = "StringEquals",
-                                Values = distribution.Arn,
+                                Values = mainDistribution.Arn,
                                 Variable = "AWS:SourceArn"
                             }
                         ],
