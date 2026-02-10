@@ -30,9 +30,8 @@ public class Distributions
 
     public Distributions(string prefix, DistributionsArgs args)
     {
-        OriginAccessControl = new OriginAccessControl($"{prefix}-originaccesscontrol", new OriginAccessControlArgs
+        OriginAccessControl = new OriginAccessControl($"{prefix}-oac", new OriginAccessControlArgs
         {
-            Name = $"{prefix}-originaccesscontrol",
             OriginAccessControlOriginType = "s3",
             SigningBehavior = "always",
             SigningProtocol = "sigv4"
@@ -41,14 +40,12 @@ public class Distributions
         ViewerRequestFunction = new Function($"{prefix}-function-viewerrequest", new FunctionArgs
         {
             Code = File.ReadAllText(args.ViewerRequestFunctionFile),
-            Name = $"{prefix}-function-viewerrequest",
             Runtime = "cloudfront-js-2.0"
         }, new CustomResourceOptions { Provider = args.EnvProvider });
 
         ViewerResponseFunction = new Function($"{prefix}-function-viewerresponse", new FunctionArgs
         {
             Code = File.ReadAllText(args.ViewerResponseFunctionFile),
-            Name = $"{prefix}-function-viewerresponse",
             Runtime = "cloudfront-js-2.0"
         }, new CustomResourceOptions { Provider = args.EnvProvider });
 

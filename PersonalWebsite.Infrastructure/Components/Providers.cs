@@ -18,7 +18,7 @@ public class Providers
 
     public Providers(string prefix, ProvidersArgs args)
     {
-        DnsProvider = new Provider($"{prefix}-provider-dns", new ProviderArgs
+        DnsProvider = new Provider($"{prefix}-provider-use1-dns", new ProviderArgs
         {
             AllowedAccountIds = [args.DnsAccountId],
             AssumeRoles = new ProviderAssumeRoleArgs
@@ -29,7 +29,7 @@ public class Providers
             Region = "us-east-1"
         });
 
-        EnvProvider = new Provider($"{prefix}-provider-env", new ProviderArgs
+        EnvProvider = new Provider($"{prefix}-provider-use1-env", new ProviderArgs
         {
             AllowedAccountIds = [args.EnvAccountId],
             AssumeRoles = new ProviderAssumeRoleArgs
