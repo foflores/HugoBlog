@@ -68,7 +68,7 @@ public class Distributions
                 CachePolicyId = "658327ea-f89d-4fab-a63d-7e88639e58f6",
                 CachedMethods = ["GET", "HEAD"],
                 Compress = true,
-                TargetOriginId = $"{prefix}-bucket-origin",
+                TargetOriginId = $"{prefix}-origin-source",
                 ViewerProtocolPolicy = "redirect-to-https",
                 FunctionAssociations =
                 [
@@ -92,7 +92,7 @@ public class Distributions
                 {
                     DomainName = args.SourceBucket.BucketRegionalDomainName,
                     OriginAccessControlId = OriginAccessControl.Id,
-                    OriginId = $"{prefix}-bucket-origin",
+                    OriginId = $"{prefix}-origin-source",
                 }
             },
             PriceClass = "PriceClass_100",
