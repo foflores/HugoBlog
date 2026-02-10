@@ -5,7 +5,7 @@ using Pulumi.Aws;
 using Pulumi.Aws.Acm;
 using Pulumi.Aws.Route53;
 
-namespace PersonalWebsite.Infrastructure.Components;
+namespace HugoBlog.Infrastructure.Components;
 
 public class CertificatesArgs
 {

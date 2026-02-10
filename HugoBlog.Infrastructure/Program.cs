@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using PersonalWebsite.Infrastructure.Components;
+using HugoBlog.Infrastructure.Components;
 using Pulumi;
 
 // ReSharper disable UnusedVariable

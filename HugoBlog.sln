@@ -9,9 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFiles", "SolutionFi
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalWebsite.Infrastructure", "PersonalWebsite.Infrastructure\PersonalWebsite.Infrastructure.csproj", "{831908BF-FBA8-4915-B45B-45FE724FEF14}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HugoBlog.Infrastructure", "HugoBlog.Infrastructure\HugoBlog.Infrastructure.csproj", "{831908BF-FBA8-4915-B45B-45FE724FEF14}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalWebsite.App", "PersonalWebsite.App\PersonalWebsite.App.csproj", "{10A0F69B-D7BE-4006-8E3B-7EAD571A24D1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HugoBlog", "HugoBlog\HugoBlog.csproj", "{10A0F69B-D7BE-4006-8E3B-7EAD571A24D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

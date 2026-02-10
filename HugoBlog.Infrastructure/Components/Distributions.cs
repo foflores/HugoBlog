@@ -8,7 +8,7 @@ using Pulumi.Aws.S3;
 
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace PersonalWebsite.Infrastructure.Components;
+namespace HugoBlog.Infrastructure.Components;
 
 public class DistributionsArgs
 {

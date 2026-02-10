@@ -4,7 +4,7 @@ using Pulumi.Aws.CloudFront;
 using Pulumi.Aws.Route53;
 using Pulumi.Aws.Route53.Inputs;
 
-namespace PersonalWebsite.Infrastructure.Components;
+namespace HugoBlog.Infrastructure.Components;
 
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
