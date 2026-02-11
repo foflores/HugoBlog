@@ -2,15 +2,15 @@
 
 function handler(event) {
     let request = event.request;
-    let host = request.headers["host"];
-    let primaryDomain = `https://favianflores.com${request.uri}`;
+    let host = request.headers.host.value;
+    let domain = `https://www.favianflores.com${request.uri}`;
 
-    if (host === "www.favianflores.com") {
+    if (host === "favianflores.com") {
         return {
             statusCode: 302,
             statusDescription: 'Found',
             headers:
-                {"location": {"value": primaryDomain}}
+                {"location": {"value": domain}}
         };
     }
 

@@ -45,7 +45,8 @@ return await Deployment.RunAsync(() =>
         SourceBucket = buckets.SourceBucket,
         Certificate = certificates.Certificate,
         CertificateValidation = certificates.CertificateValidation,
-        Domain = domain
+        Domain = domain,
+        SubjectAlternativeNames = subjectAlternativeNames
     });
 
     buckets.ApplySourceBucketPolicy(distributions.Distribution);

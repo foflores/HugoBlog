@@ -17,6 +17,7 @@ public class DistributionsArgs
     public required CertificateValidation CertificateValidation { get; init; }
     public required Provider EnvProvider { get; init; }
     public required string Domain { get; init; }
+    public required InputList<string> SubjectAlternativeNames { get; init; }
     public required string ViewerRequestFunctionFile { get; init; }
     public required string ViewerResponseFunctionFile { get; init; }
 }
@@ -37,21 +38,23 @@ public class Distributions
             SigningProtocol = "sigv4"
         }, new CustomResourceOptions { Provider = args.EnvProvider });
 
-        ViewerRequestFunction = new Function($"{prefix}-function-viewerrequest", new FunctionArgs
+        ViewerRequestFunction = new Function($"{prefix}-function-viewerreq", new FunctionArgs
         {
             Code = File.ReadAllText(args.ViewerRequestFunctionFile),
             Runtime = "cloudfront-js-2.0"
         }, new CustomResourceOptions { Provider = args.EnvProvider });
 
-        ViewerResponseFunction = new Function($"{prefix}-function-viewerresponse", new FunctionArgs
+        ViewerResponseFunction = new Function($"{prefix}-function-viewerres", new FunctionArgs
         {
             Code = File.ReadAllText(args.ViewerResponseFunctionFile),
             Runtime = "cloudfront-js-2.0"
         }, new CustomResourceOptions { Provider = args.EnvProvider });
 
+        InputList<string> aliases = [ args.Domain ];
+        aliases.AddRange(args.SubjectAlternativeNames);
         Distribution = new Distribution($"{prefix}-distribution", new DistributionArgs
         {
-            Aliases = [ args.Domain ],
+            Aliases = aliases,
             CustomErrorResponses =
             [
                 new DistributionCustomErrorResponseArgs
