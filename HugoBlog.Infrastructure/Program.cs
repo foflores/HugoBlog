@@ -56,4 +56,10 @@ return await Deployment.RunAsync(() =>
         MainDistribution = distributions.Distribution,
         MainHostedZoneId = zoneId
     });
+
+    return new Dictionary<string, object?>
+    {
+        [$"{prefix}-bucket-source-arn"] = buckets.SourceBucket.Arn,
+        [$"{prefix}-distribution-arn"] = distributions.Distribution.Arn
+    };
 });

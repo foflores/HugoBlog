@@ -8,10 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main branch
-        uses: actions/checkout@v6.0.1
+        uses: actions/checkout@v6
 
       - name: Configure aws credentials
-        uses: aws-actions/configure-aws-credentials@v5.1.1
+        uses: aws-actions/configure-aws-credentials@v6
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_ACCESS_KEY }}
@@ -26,12 +26,12 @@ jobs:
 
       - name: Build
         run: hugo --environment production
-        working-directory: ./PersonalWebsite.App
+        working-directory: ./HugoBlog
 
       - name: Deploy
-        run: aws s3 sync --delete ./public s3://personalwebsite-prod-bucket-source
-        working-directory: ./PersonalWebsite.App
+        run: aws s3 sync --delete ./public s3://hugoblog-prod-bucket-source-6721cb8
+        working-directory: ./HugoBlog
 
       - name: Invalidate cdn
-        run: aws cloudfront create-invalidation --distribution-id E1DSZJNGP44NXA --paths "/*"
-        working-directory: ./PersonalWebsite.App
+        run: aws cloudfront create-invalidation --distribution-id E3DCZ6KP01MZ5D --paths "/*"
+        working-directory: ./HugoBlog

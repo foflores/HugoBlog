@@ -1,11 +1,11 @@
 config:
   pulumi:disable-default-providers: ["*"]
-  personalwebsite:dns-account-id: 221082175187
-  personalwebsite:dns-iac-role-arn: arn:aws:iam::221082175187:role/org-dns-role-iac-d6e37b3
-  personalwebsite:env-account-id: 633067888675
-  personalwebsite:env-iac-role-arn: arn:aws:iam::633067888675:role/org-production-role-iac-d53f9bb
-  personalwebsite:zone-id: Z09373552A3ZF6Q4ON5ZA
-  personalwebsite:domain: favianflores.com
-  personalwebsite:subject-alternative-names: [ www.favianflores.com ]
-  personalwebsite:viewer-request-function-file: Functions/ViewerRequestProd.js
-  personalwebsite:viewer-response-function-file: Functions/ViewerResponse.js
+  hugoblog:dns-account-id: 221082175187
+  hugoblog:dns-iac-role-arn: arn:aws:iam::221082175187:role/org-dns-role-iac-d6e37b3
+  hugoblog:env-account-id: 633067888675
+  hugoblog:env-iac-role-arn: arn:aws:iam::633067888675:role/org-production-role-iac-d53f9bb
+  hugoblog:zone-id: Z09373552A3ZF6Q4ON5ZA
+  hugoblog:domain: favianflores.com
+  hugoblog:subject-alternative-names: [ www.favianflores.com ]
+  hugoblog:viewer-request-function-file: Functions/ViewerRequestProd.js
+  hugoblog:viewer-response-function-file: Functions/ViewerResponse.js

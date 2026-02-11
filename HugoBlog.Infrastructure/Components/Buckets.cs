@@ -28,7 +28,6 @@ public class Buckets
 
         SourceBucket = new Bucket($"{prefix}-bucket-source", new BucketArgs
         {
-            BucketName = $"{prefix}-bucket-source",
             ForceDestroy = true
         }, new CustomResourceOptions { Provider = args.EnvProvider });
     }
