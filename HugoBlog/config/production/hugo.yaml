@@ -1,5 +1,4 @@
-baseURL: https://favianflores.com/
-googleAnalytics: "G-DJ6YYREJ5N"
+baseURL: https://hugoblog.favianflores.com/
 
 enableRobotsTXT: true
 buildDrafts: false
