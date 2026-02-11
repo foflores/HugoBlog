@@ -1,3 +1,4 @@
+using System.IO;
 using Pulumi;
 using Pulumi.Aws;
 using Pulumi.Aws.Acm;
@@ -16,12 +17,14 @@ public class DistributionsArgs
     public required CertificateValidation CertificateValidation { get; init; }
     public required Provider EnvProvider { get; init; }
     public required string Domain { get; init; }
+    public required string ViewerRequestFunctionFile { get; init; }
 }
 
 public class Distributions
 {
     public Distribution Distribution { get; }
     public OriginAccessControl OriginAccessControl { get; }
+    public Function ViewerRequestFunction { get; }
 
     public Distributions(string prefix, DistributionsArgs args)
     {
@@ -30,6 +33,12 @@ public class Distributions
             OriginAccessControlOriginType = "s3",
             SigningBehavior = "always",
             SigningProtocol = "sigv4"
+        }, new CustomResourceOptions { Provider = args.EnvProvider });
+
+        ViewerRequestFunction = new Function($"{prefix}-function-viewerreq", new FunctionArgs
+        {
+            Code = File.ReadAllText(args.ViewerRequestFunctionFile),
+            Runtime = "cloudfront-js-2.0"
         }, new CustomResourceOptions { Provider = args.EnvProvider });
 
         Distribution = new Distribution($"{prefix}-distribution", new DistributionArgs
@@ -52,7 +61,15 @@ public class Distributions
                 CachedMethods = ["GET", "HEAD"],
                 Compress = true,
                 TargetOriginId = $"{prefix}-origin-source",
-                ViewerProtocolPolicy = "redirect-to-https"
+                ViewerProtocolPolicy = "redirect-to-https",
+                FunctionAssociations =
+                [
+                    new DistributionDefaultCacheBehaviorFunctionAssociationArgs
+                    {
+                        EventType = "viewer-request",
+                        FunctionArn = ViewerRequestFunction.Arn
+                    },
+                ]
             },
             Enabled = true,
             HttpVersion = "http2and3",

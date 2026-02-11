@@ -12,6 +12,7 @@ return await Deployment.RunAsync(() =>
     var zoneId = config.Require("zone-id");
     var domain = config.Require("domain");
     var recordName = config.Require("record-name");
+    var viewerRequestFunctionFile = config.Require("viewer-request-function-file");
 
     var providers = new Providers(prefix, new ProvidersArgs
     {
@@ -41,7 +42,8 @@ return await Deployment.RunAsync(() =>
         SourceBucket = buckets.SourceBucket,
         Certificate = certificates.Certificate,
         CertificateValidation = certificates.CertificateValidation,
-        Domain = domain
+        Domain = domain,
+        ViewerRequestFunctionFile = viewerRequestFunctionFile,
     });
 
     buckets.ApplySourceBucketPolicy(distributions.Distribution);

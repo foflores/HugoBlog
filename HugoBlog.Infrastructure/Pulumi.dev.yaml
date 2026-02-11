@@ -7,3 +7,4 @@ config:
   hugoblog:zone-id: Z01245352CJ13PJJUPQK0
   hugoblog:domain: hugoblog.favianflores.net
   hugoblog:record-name: hugoblog
+  hugoblog:viewer-request-function-file: Functions/ViewerRequest.js
