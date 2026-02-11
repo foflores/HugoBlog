@@ -74,12 +74,12 @@ params:
     Content: "I'm Favian and this is my blog where I write about software development. You can find explainers, how-tos, guides, tips & tricks, and anything else I can think of."
 
   socialIcons:
-    - name: twitter
-      url: "http://twitter.com/foflores10/"
-    - name: linkedin
-      url: "https://www.linkedin.com/in/foflores10"
     - name: github
       url: "https://github.com/foflores/"
+    - name: linkedin
+      url: "https://www.linkedin.com/in/foflores"
+    - name: substack
+      url: "https://favianflores.substack.com/"
 
   cover:
     hidden: true # hide everywhere but not in structured data
