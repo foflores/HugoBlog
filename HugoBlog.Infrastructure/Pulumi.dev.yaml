@@ -5,7 +5,5 @@ config:
   hugoblog:env-account-id: 412433735452
   hugoblog:env-iac-role-arn: arn:aws:iam::412433735452:role/org-development-role-iac-43dcbd2
   hugoblog:zone-id: Z01245352CJ13PJJUPQK0
-  hugoblog:domain: www.favianflores.net
-  hugoblog:subject-alternative-names: [ favianflores.net ]
-  hugoblog:viewer-request-function-file: Functions/ViewerRequestDev.js
-  hugoblog:viewer-response-function-file: Functions/ViewerResponse.js
+  hugoblog:domain: hugoblog.favianflores.net
+  hugoblog:record-name: hugoblog

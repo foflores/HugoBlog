@@ -1,4 +1,3 @@
-using System.IO;
 using Pulumi;
 using Pulumi.Aws;
 using Pulumi.Aws.Acm;
@@ -17,17 +16,12 @@ public class DistributionsArgs
     public required CertificateValidation CertificateValidation { get; init; }
     public required Provider EnvProvider { get; init; }
     public required string Domain { get; init; }
-    public required InputList<string> SubjectAlternativeNames { get; init; }
-    public required string ViewerRequestFunctionFile { get; init; }
-    public required string ViewerResponseFunctionFile { get; init; }
 }
 
 public class Distributions
 {
     public Distribution Distribution { get; }
     public OriginAccessControl OriginAccessControl { get; }
-    public Function ViewerRequestFunction { get; }
-    public Function ViewerResponseFunction { get; }
 
     public Distributions(string prefix, DistributionsArgs args)
     {
@@ -38,23 +32,9 @@ public class Distributions
             SigningProtocol = "sigv4"
         }, new CustomResourceOptions { Provider = args.EnvProvider });
 
-        ViewerRequestFunction = new Function($"{prefix}-function-viewerreq", new FunctionArgs
-        {
-            Code = File.ReadAllText(args.ViewerRequestFunctionFile),
-            Runtime = "cloudfront-js-2.0"
-        }, new CustomResourceOptions { Provider = args.EnvProvider });
-
-        ViewerResponseFunction = new Function($"{prefix}-function-viewerres", new FunctionArgs
-        {
-            Code = File.ReadAllText(args.ViewerResponseFunctionFile),
-            Runtime = "cloudfront-js-2.0"
-        }, new CustomResourceOptions { Provider = args.EnvProvider });
-
-        InputList<string> aliases = [ args.Domain ];
-        aliases.AddRange(args.SubjectAlternativeNames);
         Distribution = new Distribution($"{prefix}-distribution", new DistributionArgs
         {
-            Aliases = aliases,
+            Aliases = [ args.Domain ],
             CustomErrorResponses =
             [
                 new DistributionCustomErrorResponseArgs
@@ -72,20 +52,7 @@ public class Distributions
                 CachedMethods = ["GET", "HEAD"],
                 Compress = true,
                 TargetOriginId = $"{prefix}-origin-source",
-                ViewerProtocolPolicy = "redirect-to-https",
-                FunctionAssociations =
-                [
-                    new DistributionDefaultCacheBehaviorFunctionAssociationArgs
-                    {
-                        EventType = "viewer-request",
-                        FunctionArn = ViewerRequestFunction.Arn
-                    },
-                    new DistributionDefaultCacheBehaviorFunctionAssociationArgs
-                    {
-                        EventType = "viewer-response",
-                        FunctionArn = ViewerResponseFunction.Arn
-                    }
-                ]
+                ViewerProtocolPolicy = "redirect-to-https"
             },
             Enabled = true,
             HttpVersion = "http2and3",

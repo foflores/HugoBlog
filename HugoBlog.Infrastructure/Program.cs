@@ -11,9 +11,7 @@ return await Deployment.RunAsync(() =>
     var prefix = $"{Deployment.Instance.ProjectName}-{Deployment.Instance.StackName}";
     var zoneId = config.Require("zone-id");
     var domain = config.Require("domain");
-    var subjectAlternativeNames = config.RequireObject<List<string>>("subject-alternative-names");
-    var viewerRequestFunctionFile = config.Require("viewer-request-function-file");
-    var viewerResponseFunctionFile = config.Require("viewer-response-function-file");
+    var recordName = config.Require("record-name");
 
     var providers = new Providers(prefix, new ProvidersArgs
     {
@@ -28,7 +26,7 @@ return await Deployment.RunAsync(() =>
         DnsProvider = providers.DnsProvider,
         EnvProvider = providers.EnvProvider,
         Domain = domain,
-        SubjectAlternativeNames = subjectAlternativeNames,
+        SubjectAlternativeNames = new InputList<string>(),
         ZoneId = zoneId
     });
 
@@ -40,13 +38,10 @@ return await Deployment.RunAsync(() =>
     var distributions = new Distributions(prefix, new DistributionsArgs
     {
         EnvProvider = providers.EnvProvider,
-        ViewerRequestFunctionFile = viewerRequestFunctionFile,
-        ViewerResponseFunctionFile = viewerResponseFunctionFile,
         SourceBucket = buckets.SourceBucket,
         Certificate = certificates.Certificate,
         CertificateValidation = certificates.CertificateValidation,
-        Domain = domain,
-        SubjectAlternativeNames = subjectAlternativeNames
+        Domain = domain
     });
 
     buckets.ApplySourceBucketPolicy(distributions.Distribution);
@@ -55,7 +50,8 @@ return await Deployment.RunAsync(() =>
     {
         DnsProvider = providers.DnsProvider,
         MainDistribution = distributions.Distribution,
-        MainHostedZoneId = zoneId
+        MainHostedZoneId = zoneId,
+        RecordName = recordName,
     });
 
     return new Dictionary<string, object?>
