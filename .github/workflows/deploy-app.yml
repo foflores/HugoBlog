@@ -36,7 +36,14 @@ jobs:
           hugo-version: '0.164.0'
           extended: true
 
+      - name: Add versioning
+        uses: dotnet/nbgv@v0.5.2
+        with:
+          setAllVars: 'true'
+
       - name: Build
+        env:
+          HUGOxPARAMSxFOOTERxTEXT: 'Version ${{ steps.nbgv.outputs.AssemblyInformationalVersion }}'
         run: hugo --environment ${{ github.event.inputs.env }}
         working-directory: ./HugoBlog
 
