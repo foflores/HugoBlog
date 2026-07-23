@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/SolutionFiles/">
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path="README.md" />
+    <File Path="version.json" />
+  </Folder>
+  <Project Path="HugoBlog.Infrastructure/HugoBlog.Infrastructure.csproj" />
+  <Project Path="HugoBlog/HugoBlog.csproj" />
+</Solution>
