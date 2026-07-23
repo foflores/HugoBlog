@@ -37,6 +37,7 @@ jobs:
           extended: true
 
       - name: Add versioning
+        id: nbgv
         uses: dotnet/nbgv@v0.5.2
         with:
           setAllVars: 'true'
