@@ -17,7 +17,7 @@ jobs:
     environment: ${{ github.event.inputs.env }}
     steps:
       - name: Checkout main branch
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Configure aws credentials
         uses: aws-actions/configure-aws-credentials@v6
