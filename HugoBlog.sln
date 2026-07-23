@@ -8,6 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFiles", "SolutionFi
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		README.md = README.md
+		version.json = version.json
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HugoBlog.Infrastructure", "HugoBlog.Infrastructure\HugoBlog.Infrastructure.csproj", "{831908BF-FBA8-4915-B45B-45FE724FEF14}"

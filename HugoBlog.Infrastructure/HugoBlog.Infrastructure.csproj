@@ -7,6 +7,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Nerdbank.GitVersioning" Version="3.10.91">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="Pulumi" Version="3.107.3" />
         <PackageReference Include="Pulumi.Aws" Version="7.39.0" />
     </ItemGroup>
