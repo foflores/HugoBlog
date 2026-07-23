@@ -1,21 +1,33 @@
-name: app-deploy-dev
+name: Deploy App
 
 on:
   workflow_dispatch:
+    inputs:
+      env:
+        description: 'Target Environment'
+        required: true
+        type: choice
+        options:
+          - dev
+          - prod
 
 jobs:
-  app-deploy-dev:
+  deploy-app:
     runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.env }}
     steps:
       - name: Checkout main branch
         uses: actions/checkout@v6
+        with:
+          fetch-depth: '0'
+          submodules: 'true'
 
       - name: Configure aws credentials
         uses: aws-actions/configure-aws-credentials@v6
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_ACCESS_KEY }}
-          role-to-assume: arn:aws:iam::412433735452:role/org-development-role-iac-43dcbd2
+          role-to-assume: ${{ vars.AWS_ROLE_TO_ASSUME }}
           aws-region: us-east-1
 
       - name: Install hugo
@@ -25,13 +37,13 @@ jobs:
           extended: true
 
       - name: Build
-        run: hugo --environment development
+        run: hugo --environment ${{ github.event.inputs.env }}
         working-directory: ./HugoBlog
 
       - name: Deploy
-        run: aws s3 sync --delete ./public s3://hugoblog-dev-bucket-source
+        run: aws s3 sync --delete ./public s3://${{ vars.AWS_BUCKET_NAME }}
         working-directory: ./HugoBlog
 
       - name: Invalidate cdn
-        run: aws cloudfront create-invalidation --distribution-id E9ZXDAQJUEEYM --paths "/*"
+        run: aws cloudfront create-invalidation --distribution-id ${{ vars.AWS_DISTRIBUTION_ID }} --paths "/*"
         working-directory: ./HugoBlog

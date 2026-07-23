@@ -1,14 +1,26 @@
-name: infra-deploy-prod
+name: Deploy Infra
 
 on:
   workflow_dispatch:
+    inputs:
+      env:
+        description: 'Target Environment'
+        required: true
+        type: choice
+        options:
+          - dev
+          - prod
 
 jobs:
-  infra-deploy-prod:
+  deploy-infra:
     runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.env }}
     steps:
       - name: Checkout main branch
         uses: actions/checkout@v6
+        with:
+          fetch-depth: '0'
+          submodules: 'true'
 
       - name: Configure aws credentials
         uses: aws-actions/configure-aws-credentials@v6
@@ -21,7 +33,7 @@ jobs:
         uses: pulumi/actions@v6
         with:
           command: update
-          stack-name: foflores/hugoblog/prod
+          stack-name: ${{ vars.PULUMI_STACK_NAME }}
           work-dir: ./HugoBlog.Infrastructure
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
