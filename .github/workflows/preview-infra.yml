@@ -27,7 +27,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Run pulumi preview
-        uses: pulumi/actions@v6
+        uses: pulumi/actions@v7
         with:
           command: preview
           stack-name: ${{ vars.PULUMI_STACK_NAME }}
