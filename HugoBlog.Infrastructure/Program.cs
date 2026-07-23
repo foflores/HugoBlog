@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Reflection;
 using HugoBlog.Infrastructure.Components;
 using Pulumi;
 
@@ -59,6 +60,9 @@ return await Deployment.RunAsync(() =>
     return new Dictionary<string, object?>
     {
         [$"{prefix}-bucket-source-arn"] = buckets.SourceBucket.Arn,
-        [$"{prefix}-distribution-arn"] = distributions.Distribution.Arn
+        [$"{prefix}-distribution-arn"] = distributions.Distribution.Arn,
+        [$"{prefix}-version"] = Assembly.GetExecutingAssembly()
+            .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
+            .InformationalVersion ?? "1.0.0",
     };
 });
