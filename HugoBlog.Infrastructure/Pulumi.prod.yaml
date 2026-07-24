@@ -8,3 +8,6 @@ config:
   hugoblog:domain: hugoblog.favianflores.com
   hugoblog:record-name: hugoblog
   hugoblog:viewer-request-function-file: Functions/ViewerRequest.js
+  hugoblog:aws-account-id: 888359517863
+  hugoblog:aws-iac-role-arn: arn:aws:iam::888359517863:role/org-management-role-iac-81ebd7e
+  hugoblog:aws-zone-id: Z014022129B2KHPOMXERO

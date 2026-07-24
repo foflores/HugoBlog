@@ -2,6 +2,10 @@
 using System.Reflection;
 using HugoBlog.Infrastructure.Components;
 using Pulumi;
+using Pulumi.Aws;
+using Pulumi.Aws.Inputs;
+using Pulumi.Aws.Route53;
+using Config = Pulumi.Config;
 
 // ReSharper disable UnusedVariable
 
@@ -14,6 +18,9 @@ return await Deployment.RunAsync(() =>
     var domain = config.Require("domain");
     var recordName = config.Require("record-name");
     var viewerRequestFunctionFile = config.Require("viewer-request-function-file");
+    var awsAccountId = config.Require("aws-account-id");
+    var awsIacRoleArn = config.Require("aws-iac-role-arn");
+    var awsZoneId = config.Require("aws-zone-id");
 
     var providers = new Providers(prefix, new ProvidersArgs
     {
@@ -21,6 +28,17 @@ return await Deployment.RunAsync(() =>
         DnsAccountId = config.Require("dns-account-id"),
         EnvIacRoleArn = config.Require("env-iac-role-arn"),
         DnsIacRoleArn = config.Require("dns-iac-role-arn")
+    });
+
+    var provider = new Provider($"{prefix}-provider", new ProviderArgs
+    {
+        AllowedAccountIds = [ awsAccountId ],
+        AssumeRoles = new ProviderAssumeRoleArgs
+        {
+            RoleArn = awsIacRoleArn,
+            SessionName = "pulumi-deploy"
+        },
+        Region = "us-east-1"
     });
 
     var certificates = new Certificates(prefix, new CertificatesArgs
@@ -56,6 +74,15 @@ return await Deployment.RunAsync(() =>
         MainHostedZoneId = zoneId,
         RecordName = recordName,
     });
+
+    var hugoBlogRecord = new Record($"{prefix}-record-hugoblog", new RecordArgs
+    {
+        Name = "hugoblog",
+        Ttl = 300,
+        Type = "CNAME",
+        Records = [ distributions.Distribution.DomainName ],
+        ZoneId = awsZoneId
+    }, new CustomResourceOptions { Provider = provider });
 
     return new Dictionary<string, object?>
     {
