@@ -1,4 +1,4 @@
-baseURL: https://hugoblog.favianflores.net/
+baseURL: https://hugoblog.dev.favianflores.com/
 
 enableRobotsTXT: false
 buildDrafts: false
@@ -6,5 +6,5 @@ buildFuture: true
 buildExpired: false
 
 params:
-  env: production
+  env: development
   robotsNoIndex: true
