@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       env:
-        description: 'Target Environment'
+        description: Target Environment
         required: true
         type: choice
         options:
@@ -13,14 +13,15 @@ on:
 
 jobs:
   deploy-app:
+    name: Deploy App
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.env }}
     steps:
       - name: Checkout main branch
         uses: actions/checkout@v7
         with:
-          fetch-depth: '0'
-          submodules: 'true'
+          fetch-depth: 0
+          submodules: true
 
       - name: Configure aws credentials
         uses: aws-actions/configure-aws-credentials@v6
@@ -33,18 +34,18 @@ jobs:
       - name: Install hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: '0.164.0'
+          hugo-version: 0.164.0
           extended: true
 
       - name: Add versioning
         id: nbgv
         uses: dotnet/nbgv@v0.5.2
         with:
-          setAllVars: 'true'
+          setAllVars: true
 
       - name: Build
         env:
-          HUGOxPARAMSxFOOTERxTEXT: 'Version ${{ steps.nbgv.outputs.AssemblyInformationalVersion }}'
+          HUGOxPARAMSxFOOTERxTEXT: Version ${{ steps.nbgv.outputs.AssemblyInformationalVersion }}
         run: hugo --environment ${{ github.event.inputs.env }}
         working-directory: ./HugoBlog
 
