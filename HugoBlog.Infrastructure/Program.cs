@@ -205,9 +205,9 @@ return await Deployment.RunAsync(() =>
 
     return new Dictionary<string, object?>
     {
-        [$"{prefix}-bucket-arn"] = bucket.Arn,
-        [$"{prefix}-distribution-arn"] = distribution.Arn,
-        [$"{prefix}-version"] = Assembly.GetExecutingAssembly()
+        ["bucket-arn"] = bucket.Arn,
+        ["distribution-id"] = distribution.Id,
+        ["version"] = Assembly.GetExecutingAssembly()
             .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
             .InformationalVersion ?? "1.0.0",
     };

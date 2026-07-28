@@ -31,17 +31,27 @@ jobs:
           role-to-assume: ${{ vars.AWS_ROLE_TO_ASSUME }}
           aws-region: us-east-1
 
-      - name: Install hugo
+      - name: Install Hugo
         uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: 0.164.0
           extended: true
 
-      - name: Add versioning
-        id: nbgv
+      - name: Install Nerdbank.GitVersioning
         uses: dotnet/nbgv@v0.5.2
+        id: nbgv
         with:
           setAllVars: true
+
+      - name: Install Pulumi
+        uses: pulumi/actions@v7
+        id: pulumi
+        with:
+          command: output
+          stack-name: foflores/hugoblog/${{ github.event.inputs.env }}
+          work-dir: ./HugoBlog.Infrastructure
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
       - name: Build
         env:
@@ -50,9 +60,9 @@ jobs:
         working-directory: ./HugoBlog
 
       - name: Deploy
-        run: aws s3 sync --delete ./public s3://${{ vars.AWS_BUCKET_NAME }}
+        run: aws s3 sync --delete ./public s3://${{ steps.pulumi.outputs.bucket-arn }}
         working-directory: ./HugoBlog
 
-      - name: Invalidate cdn
-        run: aws cloudfront create-invalidation --distribution-id ${{ vars.AWS_DISTRIBUTION_ID }} --paths "/*"
+      - name: Invalidate CDN
+        run: aws cloudfront create-invalidation --distribution-id ${{ steps.pulumi.outputs.distribution-id }} --paths "/*"
         working-directory: ./HugoBlog
