@@ -60,7 +60,7 @@ jobs:
         working-directory: ./HugoBlog
 
       - name: Deploy
-        run: aws s3 sync --delete ./public s3://${{ steps.pulumi.outputs.bucket-arn }}
+        run: aws s3 sync --delete ./public s3://${{ steps.pulumi.outputs.bucket-name }}
         working-directory: ./HugoBlog
 
       - name: Invalidate CDN

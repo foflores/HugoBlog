@@ -205,7 +205,7 @@ return await Deployment.RunAsync(() =>
 
     return new Dictionary<string, object?>
     {
-        ["bucket-arn"] = bucket.Arn,
+        ["bucket-name"] = bucket.BucketName,
         ["distribution-id"] = distribution.Id,
         ["version"] = Assembly.GetExecutingAssembly()
             .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
