@@ -1,16 +1,14 @@
 ---
-title: "How to use Microsoft Library Manager (LibMan)"
+title: How to use Microsoft Library Manager (LibMan)
 date: 2023-09-14T00:00:00-04:00
-# weight: 1
-# aliases: [""]
-tags: ["libman"]
-author: "Favian Flores"
+tags: [LibMan]
+author: Favian Flores
 showToc: false
 TocOpen: false
 draft: false
 hideMeta: false
 comments: false
-canonicalURL: "https://favianflores.com/posts/2023/how-to-use-libman/"
+canonicalURL: https://hugoblog.favianflores.com/posts/2023/how-to-use-libman/
 disableHLJS: false
 disableShare: false
 hideSummary: false

@@ -1,16 +1,14 @@
 ---
-title: "How to use JS Interop with Blazor"
+title: How to use JS Interop with Blazor
 date: 2023-09-19T00:00:00-04:00
-# weight: 1
-# aliases: [""]
-tags: ["Blazor"]
-author: "Favian Flores"
+tags: [Blazor]
+author: Favian Flores
 showToc: true
 TocOpen: false
 draft: false
 hideMeta: false
 comments: false
-canonicalURL: "https://favianflores.com/posts/2023/how-to-use-js-interop-with-blazor/"
+canonicalURL: https://hugoblog.favianflores.com/posts/2023/how-to-use-js-interop-with-blazor/
 disableHLJS: false
 disableShare: false
 hideSummary: false

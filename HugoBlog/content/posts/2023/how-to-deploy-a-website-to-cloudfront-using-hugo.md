@@ -1,16 +1,14 @@
 ---
-title: "How to deploy a Hugo website to CloudFront using Hugo Deploy"
+title: How to deploy a Hugo website to CloudFront using Hugo Deploy
 date: 2023-09-16T00:00:00-04:00
-# weight: 1
-# aliases: [""]
-tags: ["CloudFront", "Hugo"]
-author: "Favian Flores"
+tags: [CloudFront, Hugo]
+author: Favian Flores
 showToc: true
 TocOpen: false
 draft: false
 hideMeta: false
 comments: false
-canonicalURL: "https://favianflores.com/posts/2023/how-to-deploy-a-website-to-cloudfront-using-hugo/"
+canonicalURL: https://hugoblog.favianflores.com/posts/2023/how-to-deploy-a-website-to-cloudfront-using-hugo/
 disableHLJS: false
 disableShare: false
 hideSummary: false

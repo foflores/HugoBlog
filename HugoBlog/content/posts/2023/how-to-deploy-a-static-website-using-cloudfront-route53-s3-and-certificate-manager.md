@@ -1,16 +1,14 @@
 ---
-title: "How to deploy a static website using AWS S3, CloudFront, and Route53"
+title: How to deploy a static website using AWS S3, CloudFront, and Route53
 date: 2023-09-15T00:00:00-04:00
-# weight: 1
-# aliases: [""]
-tags: ["S3", "CloudFront", "Route53"]
-author: "Favian Flores"
+tags: [S3, CloudFront, Route53]
+author: Favian Flores
 showToc: true
 TocOpen: false
 draft: false
 hideMeta: false
 comments: false
-canonicalURL: "https://favianflores.com/posts/2023/how-to-deploy-a-static-website-using-cloudfront-route53-s3-and-certificate-manager/"
+canonicalURL: https://hugoblog.favianflores.com/posts/2023/how-to-deploy-a-static-website-using-cloudfront-route53-s3-and-certificate-manager/
 disableHLJS: false
 disableShare: false
 hideSummary: false

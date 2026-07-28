@@ -1,16 +1,14 @@
 ---
-title: "How to add a custom 404 error page to a CloudFront website"
+title: How to add a custom 404 error page to a CloudFront website
 date: 2023-09-18T00:00:00-04:00
-# weight: 1
-# aliases: [""]
-tags: ["CloudFront", "S3"]
-author: "Favian Flores"
+tags: [CloudFront, S3]
+author: Favian Flores
 showToc: true
 TocOpen: false
 draft: false
 hideMeta: false
 comments: false
-canonicalURL: "https://favianflores.com/posts/2023/how-to-add-a-custom-404-error-page-to-cloudfront-website/"
+canonicalURL: https://hugoblog.favianflores.com/posts/2023/how-to-add-a-custom-404-error-page-to-cloudfront-website/
 disableHLJS: false
 disableShare: false
 hideSummary: false

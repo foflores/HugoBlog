@@ -1,16 +1,14 @@
 ---
-title: "How to schedule Hugo deployments with GitHub Actions"
+title: How to schedule Hugo deployments with GitHub Actions
 date: 2023-09-17T00:00:00-04:00
-# weight: 1
-# aliases: [""]
-tags: ["Hugo", "GitHub Actions"]
-author: "Favian Flores"
+tags: [Hugo, GitHub Actions]
+author: Favian Flores
 showToc: true
 TocOpen: false
 draft: false
 hideMeta: false
 comments: false
-canonicalURL: "https://favianflores.com/posts/2023/how-to-schedule-hugo-deployments-with-github-actions/"
+canonicalURL: https://hugoblog.favianflores.com/posts/2023/how-to-schedule-hugo-deployments-with-github-actions/
 disableHLJS: false
 disableShare: false
 hideSummary: false
