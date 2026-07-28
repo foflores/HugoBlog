@@ -36,8 +36,4 @@ There are 2 syntax available for LINQ, query and method.
 
 ### Query Syntax
 
-Query syntax resembles sql the most. 
-
-This is a test to see what I See
-
-![Caption](/2023/how-to-add-a-custom-404-error-page-to-cloudfront-website-ugly-xml.webp)
+Query syntax resembles sql the most.
