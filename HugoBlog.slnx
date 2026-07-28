@@ -6,5 +6,4 @@
     <File Path="version.json" />
   </Folder>
   <Project Path="HugoBlog.Infrastructure/HugoBlog.Infrastructure.csproj" />
-  <Project Path="HugoBlog/HugoBlog.csproj" />
 </Solution>
